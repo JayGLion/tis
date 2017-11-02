@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="userMapper">
+
+    <resultMap type="userVO" id="UserList">
+        <result property="seq" column="SEQ" />
+        <result property="userId" column="USER_ID" />
+        <result property="password" column="PASSWORD" />
+    </resultMap>
+	
+    <select id="selectUser" parameterType="int" resultMap="UserList">
+        SELECT * FROM USER WHERE SEQ = #{SEQ}
+    </select>
+    
+    <select id="selectUserList" resultType="com.jayg.tis.user.UserVO">
+		SELECT * FROM USER ORDER BY SEQ DESC
+ 	</select>
+ 	
+ 	<select id="selectUserCount" resultType="Integer">
+		SELECT COUNT(*) FROM USER;
+ 	</select>
+<!-- 
+    <insert id="insertBoard" useGeneratedKeys="true" keyProperty="seq" parameterType="com.jayg.web.board.vo.BoardVO">
+        INSERT INTO BOARD ( seq, title, author, content) VALUES (#{seq}, #{title}, #{author}, #{content})
+    </insert>
+
+    <update id="updateBoard" parameterType="com.jayg.web.board.vo.BoardVO">
+        UPDATE BOARD SET TITLE=#{title}, AUTHOR=#{author}, CONTENT=#{content} WHERE SEQ=#{seq}
+    </update>
+     -->
+</mapper>
