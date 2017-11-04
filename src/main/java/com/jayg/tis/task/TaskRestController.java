@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,11 +14,6 @@ public class TaskRestController {
 	
 	@Autowired
 	private TaskDao taskDao;
-	
-	@RequestMapping("/task/add")
-	public Task addtask(Task task) {
-		return getOne(taskDao.save(task).getTaskSeq());
-	}
 	
 	@RequestMapping(value="/task", method=RequestMethod.POST)
 	public Task add(Task task) {
@@ -31,8 +27,8 @@ public class TaskRestController {
 	}
 	
 	@RequestMapping(value="/task/put/{id}", method=RequestMethod.PUT)
-	public Task put(@PathVariable int id, @PathVariable String name) {
-		Task task = getOne(id);
+	public Task put(@PathVariable int id, @RequestBody Task task) {
+		task.setTaskSeq(id);
 		taskDao.save(task);
 		return getOne(id);
 	}
